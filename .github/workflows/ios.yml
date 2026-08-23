@@ -1,0 +1,15 @@
+name: iOS Build & Verify
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Build for iOS Simulator (compiles every Swift file)
+        run: xcodebuild build -scheme 32Brockman -sdk iphonesimulator -configuration Debug -destination "generic/platform=iOS Simulator" CODE_SIGNING_ALLOWED=NO ONLY_ACTIVE_ARCH=YES
