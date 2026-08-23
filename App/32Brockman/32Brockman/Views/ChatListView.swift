@@ -46,16 +46,17 @@ struct ChatListView: View {
 
     private var otherUsers: [User] {
         guard let me = auth.currentUser else { return [] }
-        let fetch = FetchDescriptor<User>(predicate: #Predicate { $0.id != me.id && $0.isActive })
-        return (try? modelContext.fetch(fetch)) ?? []
+        let all = (try? modelContext.fetch(FetchDescriptor<User>())) ?? []
+        return all.filter { $0.id != me.id && $0.isActive }
     }
 
     private func participantNames(_ conv: Conversation) -> String {
         guard let me = auth.currentUser else { return "Chat" }
+        let all = (try? modelContext.fetch(FetchDescriptor<User>())) ?? []
+        let byId = Dictionary(uniqueKeysWithValues: all.map { ($0.id, $0) })
         let names = conv.participantIDs.compactMap { id -> String? in
             if id == me.id { return nil }
-            let f = FetchDescriptor<User>(predicate: #Predicate { $0.id == id })
-            return (try? modelContext.fetch(f).first)?.displayName
+            return byId[id]?.displayName
         }
         return names.isEmpty ? "Chat" : names.joined(separator: ", ")
     }

@@ -1,3 +1,4 @@
+import Foundation
 import CryptoKit
 
 func hashPassword(_ password: String) -> String {
