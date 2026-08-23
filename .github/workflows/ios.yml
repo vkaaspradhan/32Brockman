@@ -11,9 +11,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Show Xcode version
         run: xcodebuild -version
-      - name: Locate project
-        run: |
-          pwd
-          find . -name "*.xcodeproj" -maxdepth 4
       - name: Build for iOS Simulator (compiles every Swift file)
-        run: xcodebuild build -project "$PWD/App/32Brockman/32Brockman.xcodeproj" -target 32Brockman -sdk iphonesimulator -configuration Debug -destination "generic/platform=iOS Simulator" CODE_SIGNING_ALLOWED=NO ONLY_ACTIVE_ARCH=YES
+        working-directory: App/32Brockman
+        run: xcodebuild build -project 32Brockman.xcodeproj -target 32Brockman -sdk iphonesimulator -configuration Debug -destination "generic/platform=iOS Simulator" CODE_SIGNING_ALLOWED=NO ONLY_ACTIVE_ARCH=YES
