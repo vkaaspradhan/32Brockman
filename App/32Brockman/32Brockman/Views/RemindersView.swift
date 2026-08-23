@@ -124,7 +124,7 @@ struct ReminderEditorView: View {
     private func save() {
         let r: Reminder
         if let existing = reminder { r = existing } else {
-            r = Reminder(dueDate: dueDate, ownerID: ownerID)
+            r = Reminder(title: "", dueDate: dueDate, ownerID: ownerID)
             modelContext.insert(r)
         }
         r.title = title

@@ -62,7 +62,7 @@ struct TaskEditorView: View {
         if let existing = task {
             t = existing
         } else {
-            t = CleaningTask(ownerID: ownerID)
+            t = CleaningTask(title: "", ownerID: ownerID)
             modelContext.insert(t)
         }
         t.title = title
